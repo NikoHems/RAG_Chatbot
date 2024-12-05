@@ -1,54 +1,118 @@
-# Proposal: RAG Chatbot for Case Study Training
+# McKinsey Case Interview Chatbot
 
-This proposal outlines the plan to create a **RAG Chatbot** for interactive case study discussions. Using open-source frameworks like [Verba](https://github.com/weaviate/Verba) and open-source language models (hosted through platforms such as Ollama), the chatbot will enable candidates to simulate and practice case interviews effectively.
+A Streamlit application designed to simulate a McKinsey-style case interview using natural language processing and machine learning. The app processes case study PDFs, retrieves relevant context, and interacts with users through a chatbot interface powered by GPT-Neo and FAISS.
 
----
+## Features
 
-## Objective
+- **PDF Text Extraction**: Upload a case study in PDF format, and the app extracts its content for further processing.
+- **Text Chunking**: Breaks large documents into manageable chunks for embedding and retrieval.
+- **FAISS Indexing**: Efficiently retrieves the most relevant chunks of information based on user queries.
+- **Language Model Integration**: Generates context-aware responses using GPT-Neo (EleutherAI).
+- **Interactive Interface**: Engage in a simulated case interview via a Streamlit web app.
 
-The chatbot will:
-- Allow candidates to **upload case studies** and practice solving them interactively.
-- Simulate the dynamics of consulting interviews, helping users structure their thoughts and improve their problem-solving skills.
-- Provide actionable feedback for refining communication and analytical approaches.
+## Installation
 
----
+### Prerequisites
 
-## Approach
+- Python 3.8+
+- Pip package manager
 
-1. **Core Technologies**:
-   - **Verba**: Leverage Verba to build a Retrieval-Augmented Generation (RAG) workflow that ensures accurate and contextually relevant responses during case discussions.
-   - **Open-Source Models**: Use open-source large language models hosted on platforms like Ollama for generating responses.
+### Clone the Repository
 
-2. **Interactive Case Discussions**:
-   - The chatbot will analyze the uploaded case study and act as an interviewer.
-   - It will guide the candidate through the process, prompting them to ask clarifying questions, structure hypotheses, and explore solutions.
+```bash
+git clone https://github.com/NikoHems/RAG_Chatbot.git
+cd RAG_Chatbot
+```
 
-3. **Feedback Mechanism**:
-   - After the discussion, the chatbot will generate detailed feedback, highlighting:
-     - Logical structuring of answers.
-     - Depth of analysis and clarity in communication.
-     - Overall problem-solving performance.
+### Install Dependencies
 
----
+```bash
+pip install -r requirements.txt
+```
 
-## Key Features (Planned)
+### Download NLTK Data
 
-- **Custom Case Study Upload**: Users can upload their own case studies to practice with tailored scenarios.
-- **Adaptive Interactions**: The chatbot adjusts its responses and questions based on the candidate’s inputs, simulating real interview dynamics.
-- **Scalable Infrastructure**: By using open-source models, the chatbot remains flexible and cost-efficient while being accessible across various platforms.
+```python
+import nltk
+nltk.download('punkt')
+```
 
----
+## Usage
 
-## Benefits
+### Run the App
 
-- **Realistic Interview Simulation**: Helps candidates build confidence and refine their skills in a controlled, low-pressure environment.
-- **Cost-Effective Solution**: Open-source tools reduce dependency on expensive APIs.
-- **Personalized Practice**: Candidates can focus on specific industries or types of cases.
+```bash
+streamlit run app.py
+```
 
----
+### Upload a Case Study
 
-## Next Steps
+1. Click the "Browse files" button to upload a PDF containing a case study.
+2. Click "Process PDF" to extract and index the text.
 
-1. **Technical Feasibility**: Evaluate Verba’s integration capabilities for case study ingestion and retrieval.
-2. **System Design**: Develop a high-level architecture for the chatbot, detailing the interaction flow.
-3. **Prototype Development**: Build and test a minimum viable product using sample case studies.
+### Engage in the Interview
+
+1. Type your response to the interviewer's question in the input box.
+2. Click "Send" to submit your response.
+3. Review the chatbot's reply in the conversation history.
+
+## Project Structure
+
+```
+RAG_Chatbot/
+├── app.py                 # Main Streamlit application file
+├── requirements.txt       # List of dependencies
+└── README.md              # Documentation
+```
+
+## Key Components
+
+### app.py
+
+- Text Extraction: Extracts text from PDF files using pdfplumber.
+- Text Chunking: Preprocesses and splits text into chunks using NLTK's sentence tokenizer.
+- FAISS Index: Creates an index for fast similarity search.
+- Language Model: Utilizes GPT-Neo to generate responses.
+- Streamlit Interface: Provides an interactive UI for uploading PDFs and chatting.
+
+### requirements.txt
+
+Contains the necessary Python libraries, including:
+
+- streamlit
+- pdfplumber
+- nltk
+- faiss
+- sentence-transformers
+- transformers
+- torch
+
+## Model Details
+
+- **SentenceTransformer**: Pre-trained model all-MiniLM-L6-v2 for embedding text chunks.
+- **GPT-Neo**: Pre-trained language model EleutherAI/gpt-neo-2.7B for conversational response generation.
+
+## Known Limitations
+
+- Processing large PDFs may take additional time.
+- Context retrieval is limited to top-ranked chunks.
+- Response quality depends on the language model's pre-training.
+
+## Future Improvements
+
+- Support for multi-file uploads.
+- Enhanced prompt engineering for improved conversational accuracy.
+- Deployment options for scalability (e.g., Docker, cloud platforms).
+- Use of big LLM´s like GPT-4 (although out of project scope for now)
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature-name`.
+3. Commit your changes: `git commit -m 'Add feature-name'`.
+4. Push to the branch: `git push origin feature-name`.
+5. Submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
